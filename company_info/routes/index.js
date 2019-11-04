@@ -20,7 +20,7 @@ router.get('/cnpj/', function (req, res, next) {
 });
 
 /* POST Company Info */
-router.post('/', function (req, res, next) { 
+router.post('/', function (req, res, next) {
   new comp_dao()
     .add_company_info(req.body, function (data) {
       res.status(HttpStatus.OK).send(data);

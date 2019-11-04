@@ -4,7 +4,7 @@ const db_collection = 'company_info'
 let service_account = require('../sosi_gcp_nosql_service_account.json');
 
 module.exports = class {
-    add_company_info(obj, on_success, on_error) {      
+    add_company_info(obj, on_success, on_error) {
         this.initialize_app();
 
         let db = admin.firestore()
@@ -32,6 +32,22 @@ module.exports = class {
                 } else {
                     on_success(doc.data())
                 }
+            })
+            .catch((err) => {
+                on_error('Error getting documents => ' + err)
+            });
+    }
+
+    get_all(on_success, on_error) {
+        this.initialize_app();
+
+        let db = admin.firestore();
+        db.collection(db_collection)
+            .get()
+            .then((doc) => {
+                on_success({
+                    "count": doc.docs.length
+                })
             })
             .catch((err) => {
                 on_error('Error getting documents => ' + err)
