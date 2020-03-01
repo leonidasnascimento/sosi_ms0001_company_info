@@ -66,10 +66,10 @@ module.exports = class {
                 doc.docs.forEach(d => {
                     let base_data = d.data();
                     let comp = {
-                        'cvm_code': base_data.cvm_code,
-                        'name': base_data.name,
-                        'maj_activity': base_data.major_activity,
-                        'sector': base_data.sector 
+                        'cvm_code': ('cvm_code' in base_data) ? base_data.cvm_code : '',
+                        'name': ('name' in base_data) ? base_data.name : '',
+                        'maj_activity': ('major_activity' in base_data) ? base_data.major_activity : '',
+                        'sector': ('sector' in base_data) ? base_data.sector : ''
                     }
 
                     lstData.push(comp);
