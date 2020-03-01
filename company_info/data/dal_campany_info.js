@@ -54,6 +54,34 @@ module.exports = class {
             });
     }
 
+    get_dividend_analysis_data(on_success, on_error) {
+        this.initialize_app();
+
+        let db = admin.firestore();
+        let lstData = []
+
+        db.collection(db_collection)
+            .get()
+            .then((doc) => {
+                doc.docs.forEach(d => {
+                    let base_data = d.data();
+                    let comp = {
+                        'cvm_code': base_data.cvm_code,
+                        'name': base_data.name,
+                        'maj_activity': base_data.major_activity,
+                        'sector': base_data.sector 
+                    }
+
+                    lstData.push(comp);
+                });
+
+                on_success(lstData);
+            })
+            .catch((err) => {
+                on_error('Error getting documents => ' + err)
+            });
+    }
+
     initialize_app() {
         if (admin.apps.length <= 0) {
             admin.initializeApp({
